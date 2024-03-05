@@ -122,8 +122,76 @@
       "sha1": "e0e35545410fbb2a19ca0def1fd47dcdd8c3b8a5"
     },
     {
+      "path": "src/assets/coffee_assets/excelsa_coffee_beans/excelsa_coffee_beans_portrait.png",
+      "sha1": "bbdb79546f6e3fd8941d259636ad413350ed9ebf"
+    },
+    {
       "path": "src/assets/coffee_assets/excelsa_coffee_beans/excelsa_coffee_beans_square.png",
       "sha1": "6937f747f201fa632d3502f76bdff730eb05282a"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/portrait/latte_pic_1_portrait.png",
+      "sha1": "8ad0a4a284c645b19caa0de63c18c7431489d758"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/portrait/latte_pic_2_portrait.png",
+      "sha1": "69bd668a78900a5685b593a405bb203645545eaa"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/portrait/latte_pic_3_portrait.png",
+      "sha1": "91bb2130615b67f126f6892e7557833035f0be2d"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/square/latte_pic_1_square.png",
+      "sha1": "6328154fafec18dc200dc94d00556b747257e2f2"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/square/latte_pic_2_square.png",
+      "sha1": "1812c74358047243e3b30925af31b501f0a83e85"
+    },
+    {
+      "path": "src/assets/coffee_assets/latte/square/latte_pic_3_square.png",
+      "sha1": "36a906f3948b945234db478856285a6df602ab17"
+    },
+    {
+      "path": "src/assets/coffee_assets/liberica_coffee_beans/liberica_coffee_beans_portrait.png",
+      "sha1": "91b740580f694387995664be0b31e107e5983032"
+    },
+    {
+      "path": "src/assets/coffee_assets/liberica_coffee_beans/liberica_coffee_beans_square.png",
+      "sha1": "4a8e436c08d3f6b22e7d0216b9767e9a99635e91"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/portrait/macchiato_pic_1_portrait.png",
+      "sha1": "81148b809d3844f7059b53b588cdf1572bc3af00"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/portrait/macchiato_pic_2_portrait.png",
+      "sha1": "9339efb478e7cd44bcff4a507cc10ac378a6aade"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/portrait/macchiato_pic_3_portrait.png",
+      "sha1": "b0322d33abddfe1812c0973ab97b44684159fa25"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/square/macchiato_pic_1_square.png",
+      "sha1": "e8117c34de4c4cc1513e77d34afaf36cfc42f79f"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/square/macchiato_pic_2_square.png",
+      "sha1": "662890a8d53615c452f63db831e569437318af20"
+    },
+    {
+      "path": "src/assets/coffee_assets/macchiato/square/macchiato_pic_3_square.png",
+      "sha1": "1beae6c27840c63e168df79dda3bdc819c593ab7"
+    },
+    {
+      "path": "src/assets/coffee_assets/robusta_coffee_beans/robusta_coffee_beans_portrait.png",
+      "sha1": "9a299174dff0c77f894fc80e9cf5fb7aa347dfad"
+    },
+    {
+      "path": "src/assets/coffee_assets/robusta_coffee_beans/robusta_coffee_beans_square.png",
+      "sha1": "2309066dadc84c09821be71da1a6790792d1a764"
     },
     {
       "path": "src/assets/fonts/app_icons.ttf",
