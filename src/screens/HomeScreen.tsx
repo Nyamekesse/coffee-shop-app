@@ -1,6 +1,7 @@
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
+  Dimensions,
   FlatList,
   ScrollView,
   StatusBar,
@@ -60,7 +61,27 @@ const HomeScreen = () => {
   const [sortedCoffee, setSortedCoffee] = useState(
     getCoffeeList(categoryIndex.category, CoffeeList),
   );
+  const ListRef: any = useRef<FlatList>();
   const tabBarHeight = useBottomTabBarHeight();
+
+  function searchCoffee(search: string) {
+    if (search !== '') {
+      ListRef?.current?.scrollToOffset({animated: true, offset: 0});
+      setCategoryIndex({index: 0, category: categories[0]});
+      setSortedCoffee([
+        ...CoffeeList.filter((item: any) =>
+          item.name.toLowerCase().includes(search.toLowerCase()),
+        ),
+      ]);
+    }
+  }
+
+  function resetSearchCoffee() {
+    ListRef?.current?.scrollToOffset({animated: true, offset: 0});
+    setCategoryIndex({index: 0, category: categories[0]});
+    setSortedCoffee([...CoffeeList]);
+    setSearchText('');
+  }
 
   return (
     <View style={styles.screenContainer}>
@@ -75,7 +96,10 @@ const HomeScreen = () => {
         </Text>
         {/* SEARCH INPUT */}
         <View style={styles.inputContainer}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={() => {
+              searchCoffee(searchText);
+            }}>
             <CustomIcon
               name="search"
               size={FONTSIZE.size_18}
@@ -90,10 +114,25 @@ const HomeScreen = () => {
           <TextInput
             placeholder="Find Your Coffee..."
             value={searchText}
-            onChangeText={text => setSearchText(text)}
+            onChangeText={text => {
+              setSearchText(text);
+              searchCoffee(searchText);
+            }}
             placeholderTextColor={COLORS.primaryLightGreyHex}
             style={styles.textInputContainer}
           />
+          {searchText.length > 0 ? (
+            <TouchableOpacity onPress={() => resetSearchCoffee()}>
+              <CustomIcon
+                style={styles.inputIcon}
+                name="close"
+                size={FONTSIZE.size_16}
+                color={COLORS.primaryLightGreyHex}
+              />
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
 
         {/* CATEGORY SCROLL */}
@@ -108,6 +147,7 @@ const HomeScreen = () => {
               <TouchableOpacity
                 style={styles.categoryScrollViewItem}
                 onPress={() => {
+                  ListRef?.current?.scrollToOffset({animated: true, offSet: 0});
                   setCategoryIndex({index, category});
                   setSortedCoffee([...getCoffeeList(category, CoffeeList)]);
                 }}>
@@ -129,9 +169,15 @@ const HomeScreen = () => {
             </View>
           ))}
         </ScrollView>
-        {/* COFFEE FLATLIST */}
+        {/* COFFEE FLAT LIST */}
         <FlatList
+          ref={ListRef}
           horizontal
+          ListEmptyComponent={
+            <View style={styles.emptyListContainer}>
+              <Text style={styles.categoryText}>No Coffee Available</Text>
+            </View>
+          }
           showsHorizontalScrollIndicator={false}
           data={sortedCoffee}
           contentContainerStyle={styles.flatListContainer}
@@ -155,7 +201,36 @@ const HomeScreen = () => {
             );
           }}
         />
-        {/* BEANS FLATLIST */}
+        <Text style={styles.coffeesBeansTitle}>Coffee Beans</Text>
+        {/* BEANS FLAT LIST */}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={BeanList}
+          contentContainerStyle={[
+            styles.flatListContainer,
+            {marginBottom: tabBarHeight},
+          ]}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => {}}>
+                <CoffeeCard
+                  id={item.id}
+                  name={item.name}
+                  average_rating={item.average_rating}
+                  buttonPressHandler={() => {}}
+                  imagelink_square={item.imagelink_square}
+                  index={item.index}
+                  special_ingredient={item.special_ingredient}
+                  price={item.prices[2]}
+                  rosted={item.rosted}
+                  type={item.type}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />
       </ScrollView>
     </View>
   );
@@ -169,7 +244,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryBlackHex,
   },
   scrollViewFlex: {
-    flex: 1,
     flexGrow: 1,
   },
   screenTitle: {
@@ -222,5 +296,18 @@ const styles = StyleSheet.create({
     gap: SPACING.space_20,
     paddingVertical: SPACING.space_20,
     paddingHorizontal: SPACING.space_30,
+  },
+  coffeesBeansTitle: {
+    fontSize: FONTSIZE.size_18,
+    marginLeft: SPACING.space_30,
+    marginTop: SPACING.space_20,
+    fontFamily: FONTFAMILY.poppins_medium,
+    color: COLORS.secondaryLightGreyHex,
+  },
+  emptyListContainer: {
+    width: Dimensions.get('window').width - SPACING.space_30 * 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: SPACING.space_36 * 3.6,
   },
 });
