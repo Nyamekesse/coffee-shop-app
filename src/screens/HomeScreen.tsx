@@ -1,6 +1,7 @@
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import React, {useState} from 'react';
 import {
+  FlatList,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {default as CoffeeCard} from '../components/CoffeeCard';
 import CustomIcon from '../components/CustomIcon';
 import HeaderBar from '../components/HeaderBar';
 import {useStore} from '../store/store';
@@ -127,6 +129,33 @@ const HomeScreen = () => {
             </View>
           ))}
         </ScrollView>
+        {/* COFFEE FLATLIST */}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={sortedCoffee}
+          contentContainerStyle={styles.flatListContainer}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => {}}>
+                <CoffeeCard
+                  id={item.id}
+                  name={item.name}
+                  average_rating={item.average_rating}
+                  buttonPressHandler={() => {}}
+                  imagelink_square={item.imagelink_square}
+                  index={item.index}
+                  special_ingredient={item.special_ingredient}
+                  price={item.prices[2]}
+                  rosted={item.rosted}
+                  type={item.type}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />
+        {/* BEANS FLATLIST */}
       </ScrollView>
     </View>
   );
@@ -140,6 +169,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryBlackHex,
   },
   scrollViewFlex: {
+    flex: 1,
     flexGrow: 1,
   },
   screenTitle: {
@@ -188,4 +218,9 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.space_4,
   },
   categoryTextActive: {},
+  flatListContainer: {
+    gap: SPACING.space_20,
+    paddingVertical: SPACING.space_20,
+    paddingHorizontal: SPACING.space_30,
+  },
 });
