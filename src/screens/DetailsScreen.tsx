@@ -15,7 +15,8 @@ import {
 } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo';
-import { useStore } from '../store/store';
+import PaymentFooter from '../components/PaymentFooter';
+import {useStore} from '../store/store';
 import {
   BORDERRADIUS,
   COLORS,
@@ -90,7 +91,9 @@ const DetailsScreen = ({navigation, route}: Props) => {
           <View style={styles.sizeOuterContainer}>
             {itemOfIndex.prices.map((item: any, index: number) => (
               <TouchableOpacity
-              onPress={()=>{setPrice(item)}}
+                onPress={() => {
+                  setPrice(item);
+                }}
                 key={index}
                 style={[
                   styles.sizeBox,
@@ -121,6 +124,11 @@ const DetailsScreen = ({navigation, route}: Props) => {
             ))}
           </View>
         </View>
+        <PaymentFooter
+          price={price}
+          buttonTitle="Add to Cart"
+          buttonPressHandler={() => {}}
+        />
       </ScrollView>
     </View>
   );
