@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StatusBar,
@@ -13,9 +13,16 @@ import {
   ParamListBase,
   RouteProp,
 } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
 import ImageBackgroundInfo from '../components/ImageBackgroundInfo';
-import {useStore} from '../store/store';
-import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
+import { useStore } from '../store/store';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
 
 type RootStackParamList = {
   Home: undefined;
@@ -29,7 +36,12 @@ interface Props {
 }
 
 const DetailsScreen = ({navigation, route}: Props) => {
+  const {type, index, id} = route.params;
+  const itemOfIndex = useStore((state: any) =>
+    type === 'Coffee' ? state.CoffeeList : state.BeanList,
+  )[index];
   const [fullDesc, setFullDesc] = useState(false);
+  const [price, setPrice] = useState(itemOfIndex.prices[0]);
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList);
   const deleteFromFavoriteList = useStore(
     (state: any) => state.deleteFromFavoriteList,
@@ -44,10 +56,7 @@ const DetailsScreen = ({navigation, route}: Props) => {
   ) => {
     favourite ? deleteFromFavoriteList(type, id) : addToFavoriteList(type, id);
   };
-  const {type, index, id} = route.params;
-  const itemOfIndex = useStore((state: any) =>
-    type === 'Coffee' ? state.CoffeeList : state.BeanList,
-  )[index];
+
   return (
     <View style={styles.screenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
@@ -77,6 +86,40 @@ const DetailsScreen = ({navigation, route}: Props) => {
               </Text>
             </TouchableWithoutFeedback>
           )}
+          <Text style={styles.infoTitle}>Size</Text>
+          <View style={styles.sizeOuterContainer}>
+            {itemOfIndex.prices.map((item: any, index: number) => (
+              <TouchableOpacity
+              onPress={()=>{setPrice(item)}}
+                key={index}
+                style={[
+                  styles.sizeBox,
+                  {
+                    borderColor:
+                      item.size === price.size
+                        ? COLORS.primaryOrangeHex
+                        : COLORS.primaryDarkGreyHex,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.sizeText,
+                    {
+                      fontSize:
+                        itemOfIndex.type === 'bean'
+                          ? FONTSIZE.size_14
+                          : FONTSIZE.size_16,
+                      color:
+                        item.size === price.size
+                          ? COLORS.primaryOrangeHex
+                          : COLORS.primaryLightGreyHex,
+                    },
+                  ]}>
+                  {item.size}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -108,5 +151,23 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_14,
     color: COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_30,
+  },
+  sizeOuterContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: SPACING.space_20,
+  },
+  sizeBox: {
+    flex: 1,
+    backgroundColor: COLORS.primaryDarkGreyHex,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: SPACING.space_24 * 2,
+    borderRadius: BORDERRADIUS.radius_10,
+    borderWidth: 2,
+  },
+  sizeText: {
+    fontFamily: FONTFAMILY.poppins_medium,
   },
 });
