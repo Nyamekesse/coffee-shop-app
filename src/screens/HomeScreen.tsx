@@ -1,5 +1,6 @@
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import React, {useRef, useState} from 'react';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -11,10 +12,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {default as CoffeeCard} from '../components/CoffeeCard';
+import { default as CoffeeCard } from '../components/CoffeeCard';
 import CustomIcon from '../components/CustomIcon';
 import HeaderBar from '../components/HeaderBar';
-import {useStore} from '../store/store';
+import { useStore } from '../store/store';
 import {
   BORDERRADIUS,
   COLORS,
@@ -46,7 +47,11 @@ const getCoffeeList = (category: string, data: any) => {
   }
 };
 
-const HomeScreen = () => {
+interface Props{
+   navigation: NavigationProp<ParamListBase> 
+}
+
+const HomeScreen = ({navigation}:Props) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
 
@@ -184,7 +189,7 @@ const HomeScreen = () => {
           keyExtractor={item => item.id}
           renderItem={({item}) => {
             return (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => {navigation.navigate('Details')}}>
                 <CoffeeCard
                   id={item.id}
                   name={item.name}
