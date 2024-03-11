@@ -124,8 +124,22 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                     size={FONTSIZE.size_16}
                     color={COLORS.primaryOrangeHex}
                   />
-                  <Text style={styles.firstTextProperty}>{ingredients}</Text>
+                  <Text style={styles.lastTextProperty}>{ingredients}</Text>
                 </View>
+              </View>
+            </View>
+            <View style={styles.infoContainerRow}>
+              <View style={styles.ratingContainer}>
+                <CustomIcon
+                  name="star"
+                  color={COLORS.primaryOrangeHex}
+                  size={FONTSIZE.size_20}
+                />
+                <Text style={styles.ratingText}>{average_rating}</Text>
+                <Text style={styles.ratingCountText}>({ratings_count})</Text>
+              </View>
+              <View style={styles.roastedContainer}>
+                <Text style={styles.roastedText}>{roasted}</Text>
               </View>
             </View>
           </View>
@@ -196,6 +210,40 @@ const styles = StyleSheet.create({
   },
   firstTextProperty: {
     fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_10,
+    color: COLORS.primaryWhiteHex,
+  },
+  lastTextProperty: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_10,
+    color: COLORS.primaryWhiteHex,
+    marginTop: SPACING.space_2 + SPACING.space_4,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    gap: SPACING.space_10,
+    alignItems: 'center',
+  },
+  ratingText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.primaryWhiteHex,
+  },
+  ratingCountText: {
+    fontFamily: FONTFAMILY.poppins_regular,
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.primaryWhiteHex,
+  },
+  roastedContainer: {
+    height: 55,
+    width: 55 * 2 + SPACING.space_20,
+    borderRadius: BORDERRADIUS.radius_15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primaryBlackHex,
+  },
+  roastedText: {
+    fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_10,
     color: COLORS.primaryWhiteHex,
   },
