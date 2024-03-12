@@ -9,13 +9,14 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { default as CoffeeCard } from '../components/CoffeeCard';
+import {default as CoffeeCard} from '../components/CoffeeCard';
 import CustomIcon from '../components/CustomIcon';
 import HeaderBar from '../components/HeaderBar';
-import { useStore } from '../store/store';
+import {useStore} from '../store/store';
 import {
   BORDERRADIUS,
   COLORS,
@@ -47,13 +48,15 @@ const getCoffeeList = (category: string, data: any) => {
   }
 };
 
-interface Props{
-   navigation: NavigationProp<ParamListBase> 
+interface Props {
+  navigation: NavigationProp<ParamListBase>;
 }
 
-const HomeScreen = ({navigation}:Props) => {
+const HomeScreen = ({navigation}: Props) => {
   const CoffeeList = useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
+  const addToCart = useStore((state: any) => state.addToCart);
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
 
   const [categories, setCategories] = useState(
     getCategoriesFromData(CoffeeList),
@@ -87,6 +90,34 @@ const HomeScreen = ({navigation}:Props) => {
     setSortedCoffee([...CoffeeList]);
     setSearchText('');
   }
+
+  const coffeeCardAddToCart = ({
+    id,
+    index,
+    name,
+    roasted,
+    imagelink_square,
+    special_ingredient,
+    type,
+    prices,
+  }: any) => {
+    addToCart({
+      id,
+      index,
+      name,
+      roasted,
+      imagelink_square,
+      special_ingredient,
+      type,
+      prices,
+    });
+    calculateCartPrice();
+    ToastAndroid.showWithGravity(
+      `${name} is added to Cart.`,
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
 
   return (
     <View style={styles.screenContainer}>
@@ -201,13 +232,13 @@ const HomeScreen = ({navigation}:Props) => {
                   id={item.id}
                   name={item.name}
                   average_rating={item.average_rating}
-                  buttonPressHandler={() => {}}
                   imagelink_square={item.imagelink_square}
                   index={item.index}
                   special_ingredient={item.special_ingredient}
                   price={item.prices[2]}
-                  rosted={item.rosted}
+                  roasted={item.rosted}
                   type={item.type}
+                  buttonPressHandler={coffeeCardAddToCart}
                 />
               </TouchableOpacity>
             );
@@ -238,13 +269,13 @@ const HomeScreen = ({navigation}:Props) => {
                   id={item.id}
                   name={item.name}
                   average_rating={item.average_rating}
-                  buttonPressHandler={() => {}}
                   imagelink_square={item.imagelink_square}
                   index={item.index}
                   special_ingredient={item.special_ingredient}
                   price={item.prices[2]}
-                  rosted={item.rosted}
+                  roasted={item.rosted}
                   type={item.type}
+                  buttonPressHandler={coffeeCardAddToCart}
                 />
               </TouchableOpacity>
             );
