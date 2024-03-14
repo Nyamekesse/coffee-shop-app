@@ -229,15 +229,8 @@ const HomeScreen = ({navigation}: Props) => {
                   });
                 }}>
                 <CoffeeCard
-                  id={item.id}
-                  name={item.name}
-                  average_rating={item.average_rating}
-                  imagelink_square={item.imagelink_square}
-                  index={item.index}
-                  special_ingredient={item.special_ingredient}
+                  {...item}
                   price={item.prices[2]}
-                  roasted={item.rosted}
-                  type={item.type}
                   buttonPressHandler={coffeeCardAddToCart}
                 />
               </TouchableOpacity>
@@ -266,15 +259,8 @@ const HomeScreen = ({navigation}: Props) => {
                   });
                 }}>
                 <CoffeeCard
-                  id={item.id}
-                  name={item.name}
-                  average_rating={item.average_rating}
-                  imagelink_square={item.imagelink_square}
-                  index={item.index}
-                  special_ingredient={item.special_ingredient}
+                  {...item}
                   price={item.prices[2]}
-                  roasted={item.rosted}
-                  type={item.type}
                   buttonPressHandler={coffeeCardAddToCart}
                 />
               </TouchableOpacity>
