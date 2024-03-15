@@ -42,7 +42,7 @@ const CartScreen: React.FC<CartScreenProps> = ({navigation, route}) => {
   const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
   const tabBarHeight = useBottomTabBarHeight();
   const buttonPressHandler = () => {
-    navigation.navigate('Payment');
+    navigation.navigate('Payment', {amount: CartPrice});
   };
 
   const increaseCardItemQuantityHandler = (id: string, size: string) => {
