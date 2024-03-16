@@ -7,7 +7,34 @@ interface OrderHistoryCardProps {
   CartListPrice: string;
   OrderDate: string;
   CartList: [Object];
-  navigationHandler: () => void;
+  navigationHandler: ({
+    index,
+    id,
+    type,
+  }: {
+    index: number;
+    id: string;
+    type: string;
+  }) => void;
+}
+
+interface Cart {
+  ItemPrice: string;
+  id: string;
+  imagelink_square: number;
+  index: number;
+  name: string;
+  prices: Price[];
+  roasted: string;
+  special_ingredient: string;
+  type: string;
+}
+
+interface Price {
+  currency: string;
+  price: string;
+  quantity: number;
+  size: string;
 }
 
 const OrderHistoryCard: React.FC<OrderHistoryCardProps> = ({
@@ -30,7 +57,15 @@ const OrderHistoryCard: React.FC<OrderHistoryCardProps> = ({
       </View>
       <View style={styles.listContainer}>
         {CartList.map((cart: any, index: number) => (
-          <TouchableOpacity key={index}>
+          <TouchableOpacity
+            key={index}
+            onPress={() =>
+              navigationHandler({
+                index: cart.index,
+                id: cart.id,
+                type: cart.type,
+              })
+            }>
             <OrderItemCard {...cart} />
           </TouchableOpacity>
         ))}
