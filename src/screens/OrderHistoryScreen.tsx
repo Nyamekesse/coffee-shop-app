@@ -5,13 +5,26 @@ import {
   RouteProp,
 } from '@react-navigation/native';
 import React, {useState} from 'react';
-import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import EmptyListAnimation from '../components/EmptyListAnimation';
 import HeaderBar from '../components/HeaderBar';
 import OrderHistoryCard from '../components/OrderHistoryCard';
 import PopUpAnimation from '../components/PopUpAnimation';
 import {useStore} from '../store/store';
-import {COLORS, SPACING} from '../theme/theme';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
 
 type RootStackParamList = {
   Home: undefined;
@@ -43,13 +56,20 @@ const OrderHistory: React.FC<OrderHistoryScreenProps> = ({navigation}) => {
   }) => {
     navigation.navigate('Details', {index, id, type});
   };
+
+  const buttonPressHandler = () => {
+    setShowAnimation(true);
+    setTimeout(() => {
+      setShowAnimation(false);
+    }, 2000);
+  };
   return (
     <View style={styles.screenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       {showAnimation && (
         <PopUpAnimation
           style={styles.lottieAnimation}
-          source={require('../lottie/successful.json')}
+          source={require('../lottie/download.json')}
         />
       )}
       <ScrollView
@@ -73,6 +93,17 @@ const OrderHistory: React.FC<OrderHistoryScreenProps> = ({navigation}) => {
               </View>
             )}
           </View>
+          {OrderHistoryList.length > 0 ? (
+            <TouchableOpacity
+              style={styles.downloadButton}
+              onPress={() => {
+                buttonPressHandler();
+              }}>
+              <Text style={styles.buttonText}>Download</Text>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -102,5 +133,18 @@ const styles = StyleSheet.create({
   },
   lottieAnimation: {
     height: 250,
+  },
+  downloadButton: {
+    marginHorizontal: SPACING.space_20,
+    backgroundColor: COLORS.primaryOrangeHex,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: SPACING.space_36 * 2,
+    borderRadius: BORDERRADIUS.radius_20,
+  },
+  buttonText: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.primaryWhiteHex,
   },
 });
