@@ -17,6 +17,8 @@ import CustomIcon from '../components/CustomIcon';
 import GradientBGIcon from '../components/GradientBGIcon';
 import PaymentFooter from '../components/PaymentFooter';
 import PaymentMethod from '../components/PaymentMethod';
+import PopUpAnimation from '../components/PopUpAnimation';
+import {useStore} from '../store/store';
 import {
   BORDERRADIUS,
   COLORS,
@@ -60,11 +62,32 @@ interface PaymentScreenProps {
 }
 
 const PaymentScreen: React.FC<PaymentScreenProps> = ({navigation, route}) => {
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+  const addToOrderHistoryListFromCart = useStore(
+    (state: any) => state.addToOrderHistoryListFromCart,
+  );
   const [paymentMode, setPaymentMode] = useState('Credit Card');
-  const buttonPressHandler = () => {};
+  const [showAnimation, setShowAnimation] = useState(false);
+  const buttonPressHandler = () => {
+    setShowAnimation(true);
+    addToOrderHistoryListFromCart();
+    calculateCartPrice();
+    setTimeout(() => {
+      setShowAnimation(false);
+      navigation.navigate('History');
+    }, 2000);
+  };
   return (
     <View style={styles.screenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
+      {showAnimation ? (
+        <PopUpAnimation
+          style={styles.lottieAnimation}
+          source={require('../lottie/successful.json')}
+        />
+      ) : (
+        <></>
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewFlex}>
@@ -244,5 +267,8 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
     color: COLORS.primaryLightGreyHex,
+  },
+  lottieAnimation: {
+    flex: 1,
   },
 });
