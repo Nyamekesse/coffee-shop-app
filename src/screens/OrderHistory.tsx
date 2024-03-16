@@ -1,4 +1,9 @@
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp,
+} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
 import EmptyListAnimation from '../components/EmptyListAnimation';
@@ -8,10 +13,36 @@ import PopUpAnimation from '../components/PopUpAnimation';
 import {useStore} from '../store/store';
 import {COLORS, SPACING} from '../theme/theme';
 
-const OrderHistory = () => {
+type RootStackParamList = {
+  Home: undefined;
+  OrderHistory: {};
+};
+
+type OrderHistoryScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'OrderHistory'
+>;
+interface OrderHistoryScreenProps {
+  navigation: NavigationProp<ParamListBase>;
+  route: OrderHistoryScreenRouteProp;
+}
+
+const OrderHistory: React.FC<OrderHistoryScreenProps> = ({navigation}) => {
   const OrderHistoryList = useStore((state: any) => state.OrderHistoryList);
   const [showAnimation, setShowAnimation] = useState(false);
   const tabBarHeight = useBottomTabBarHeight();
+
+  const navigationHandler = ({
+    index,
+    id,
+    type,
+  }: {
+    index: number;
+    id: string;
+    type: string;
+  }) => {
+    navigation.navigate('Details', {index, id, type});
+  };
   return (
     <View style={styles.screenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
@@ -35,7 +66,7 @@ const OrderHistory = () => {
                 {OrderHistoryList.map((history: any, index: any) => (
                   <OrderHistoryCard
                     key={index}
-                    navigationHandler={() => {}}
+                    navigationHandler={navigationHandler}
                     {...history}
                   />
                 ))}
