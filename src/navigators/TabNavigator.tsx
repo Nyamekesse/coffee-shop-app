@@ -6,7 +6,7 @@ import CustomIcon from '../components/CustomIcon';
 import CartScreen from '../screens/CartScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import HomeScreen from '../screens/HomeScreen';
-import OrderHistory from '../screens/OrderHistory';
+import OrderHistory from '../screens/OrderHistoryScreen';
 import {COLORS} from '../theme/theme';
 
 const Tab = createBottomTabNavigator();
